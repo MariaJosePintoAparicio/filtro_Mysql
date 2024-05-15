@@ -982,28 +982,360 @@
 ---
 13. Encontrar el nombre de las ciudades que no tienen ningún cliente registrado.
 ```sql
-    SELECT DISTINCT c.nombre
-    FROM sakilacampus.ciudad c
-    JOIN sakilacampus.direccion d ON c.id_ciudad = d.id_ciudad
-    JOIN sakilacampus.almacen a ON d.id_direccion = a.id_direccion
-    WHERE a.id_almacen NOT IN (
-        SELECT cl.id_almacen
-        FROM sakilacampus.cliente cl
+    SELECT nombre
+    FROM sakilacampus.ciudad
+    WHERE id_ciudad NOT IN (
+        SELECT direccion.id_ciudad
+        FROM sakilacampus.direccion
+        JOIN cliente ON direccion.id_direccion = cliente.id_direccion
     );
+
++-------------------------+
+| nombre                  |
++-------------------------+
+| A Corua (La Corua)      |
+| Abha                    |
+| Abu Dhabi               |
+| Acua                    |
+| Adana                   |
+| Addis Abeba             |
+| Aden                    |
+| Adoni                   |
+| Ahmadnagar              |
+| Akishima                |
+| Akron                   |
+| al-Ayn                  |
+| al-Hawiya               |
+| al-Manama               |
+| al-Qadarif              |
+| al-Qatif                |
+| Allappuzha (Alleppey)   |
+| Allende                 |
+| Almirante Brown         |
+| Alvorada                |
+| Ambattur                |
+| Amersfoort              |
+| Amroha                  |
+| Angra dos Reis          |
+| Anpolis                 |
+| Antofagasta             |
+| Aparecida de Goinia     |
+| Apeldoorn               |
+| Araatuba                |
+| Arecibo                 |
+| Arlington               |
+| Ashdod                  |
+| Ashgabat                |
+| Ashqelon                |
+| Asuncin                 |
+| Atinsk                  |
+| Atlixco                 |
+| Augusta-Richmond County |
+| Aurora                  |
+| Avellaneda              |
+| Bag                     |
+| Baha Blanca             |
+| Baicheng                |
+| Baiyin                  |
+| Baku                    |
+| Balaiha                 |
+| Balikesir               |
+| Balurghat               |
+| Bamenda                 |
+| Bandar Seri Begawan     |
+| Banjul                  |
+| Barcelona               |
+| Basel                   |
+| Bat Yam                 |
+| Batman                  |
+| Batna                   |
+| Battambang              |
+| Baybay                  |
+| Bayugan                 |
+| Bchar                   |
+| Beira                   |
+| Bellevue                |
+| Belm                    |
+| Benguela                |
+| Beni-Mellal             |
+| Benin City              |
+| Bergamo                 |
+| Berhampore (Baharampur) |
+| Bern                    |
+| Bhavnagar               |
+| Bhilwara                |
+| Bhimavaram              |
+| Bhusawal                |
+| Bijapur                 |
+| Bilbays                 |
+| Binzhou                 |
+| Birgunj                 |
+| Bislig                  |
+| Blumenau                |
+| Boa Vista               |
+| Boksburg                |
+| Botosani                |
+| Botshabelo              |
+| Bradford                |
+| Braslia                 |
+| Bratislava              |
+| Brescia                 |
+| Brest                   |
+| Brindisi                |
+| Brockton                |
+| Bucuresti               |
+| Buenaventura            |
+| Bydgoszcz               |
+| Cabuyao                 |
+| Callao                  |
+| Cam Ranh                |
+| Cape Coral              |
+| Caracas                 |
+| Carmen                  |
+| Cavite                  |
++-------------------------+
 ```
 ---
 14. Obtener los nombres y apellidos de los actores que han participado en más de 10 películas.(having)
 ```sql
+    SELECT a.nombre, a.apellidos
+    FROM sakilacampus.actor a
+    JOIN sakilacampus.pelicula_actor pa ON a.id_actor = pa.id_actor
+    GROUP BY a.id_actor, a.nombre, a.apellidos
+    HAVING COUNT(pa.id_pelicula) > 10;
+
++-------------+--------------+
+| nombre      | apellidos    |
++-------------+--------------+
+| PENELOPE    | GUINESS      |
+| NICK        | WAHLBERG     |
+| ED          | CHASE        |
+| JENNIFER    | DAVIS        |
+| JOHNNY      | LOLLOBRIGIDA |
+| BETTE       | NICHOLSON    |
+| GRACE       | MOSTEL       |
+| MATTHEW     | JOHANSSON    |
+| JOE         | SWANK        |
+| CHRISTIAN   | GABLE        |
+| ZERO        | CAGE         |
+| KARL        | BERRY        |
+| UMA         | WOOD         |
+| VIVIEN      | BERGEN       |
+| CUBA        | OLIVIER      |
+| FRED        | COSTNER      |
+| HELEN       | VOIGHT       |
+| DAN         | TORN         |
+| BOB         | FAWCETT      |
+| LUCILLE     | TRACY        |
+| KIRSTEN     | PALTROW      |
+| ELVIS       | MARX         |
+| SANDRA      | KILMER       |
+| CAMERON     | STREEP       |
+| KEVIN       | BLOOM        |
+| RIP         | CRAWFORD     |
+| JULIA       | MCQUEEN      |
+| WOODY       | HOFFMAN      |
+| ALEC        | WAYNE        |
+| SANDRA      | PECK         |
+| SISSY       | SOBIESKI     |
+| TIM         | HACKMAN      |
+| MILLA       | PECK         |
+| AUDREY      | OLIVIER      |
+| JUDY        | DEAN         |
+| BURT        | DUKAKIS      |
+| VAL         | BOLGER       |
+| TOM         | MCKELLEN     |
+| GOLDIE      | BRODY        |
+| JOHNNY      | CAGE         |
+| JODIE       | DEGENERES    |
+| TOM         | MIRANDA      |
+| KIRK        | JOVOVICH     |
+| NICK        | STALLONE     |
+| REESE       | KILMER       |
+| PARKER      | GOLDBERG     |
+| JULIA       | BARRYMORE    |
+| FRANCES     | DAY-LEWIS    |
+| ANNE        | CRONYN       |
+| NATALIE     | HOPKINS      |
+| GARY        | PHOENIX      |
+| CARMEN      | HUNT         |
+| MENA        | TEMPLE       |
+| PENELOPE    | PINKETT      |
+| FAY         | KILMER       |
+| DAN         | HARRIS       |
+| JUDE        | CRUISE       |
+| CHRISTIAN   | AKROYD       |
+| DUSTIN      | TAUTOU       |
+| HENRY       | BERRY        |
+| CHRISTIAN   | NEESON       |
+| JAYNE       | NEESON       |
+| CAMERON     | WRAY         |
+| RAY         | JOHANSSON    |
+| ANGELA      | HUDSON       |
+| MARY        | TANDY        |
+| JESSICA     | BAILEY       |
+| RIP         | WINSLET      |
+| KENNETH     | PALTROW      |
+| MICHELLE    | MCCONAUGHEY  |
+| ADAM        | GRANT        |
+| SEAN        | WILLIAMS     |
+| GARY        | PENN         |
+| MILLA       | KEITEL       |
+| BURT        | POSEY        |
+| ANGELINA    | ASTAIRE      |
+| CARY        | MCCONAUGHEY  |
+| GROUCHO     | SINATRA      |
+| MAE         | HOFFMAN      |
+| RALPH       | CRUZ         |
+| SCARLETT    | DAMON        |
+| WOODY       | JOLIE        |
+| BEN         | WILLIS       |
+| JAMES       | PITT         |
+| MINNIE      | ZELLWEGER    |
+| GREG        | CHAPLIN      |
+| SPENCER     | PECK         |
+| KENNETH     | PESCI        |
+| CHARLIZE    | DENCH        |
+| SEAN        | GUINESS      |
+| CHRISTOPHER | BERRY        |
+| KIRSTEN     | AKROYD       |
+| ELLEN       | PRESLEY      |
+| KENNETH     | TORN         |
+| DARYL       | WAHLBERG     |
+| GENE        | WILLIS       |
+| MEG         | HAWKE        |
+| CHRIS       | BRIDGES      |
+| JIM         | MOSTEL       |
+| SPENCER     | DEPP         |
++-------------+--------------+
+
 
 ```
 ---
 15. Encontrar los nombres y apellidos de los clientes que han realizado un pago mayor a 100.
 ```sql
+    SELECT c.nombre, c.apellidos
+    FROM sakilacampus.cliente c
+    JOIN sakilacampus.pago p ON c.id_cliente = p.id_cliente
+    WHERE p.total > 100;
 
+Empty set (0,01 sec)
 ```
 ---
 16. Listar los títulos de las películas lanzadas en el mismo año que la película con id_pelicula = 2.
 ```sql
+    SELECT titulo
+    FROM sakilacampus.pelicula
+    WHERE anyo_lanzamiento = (
+        SELECT anyo_lanzamiento
+        FROM sakilacampus.pelicula
+        WHERE id_pelicula = 2
+    );
+
++-----------------------------+
+| titulo                      |
++-----------------------------+
+| ACADEMY DINOSAUR            |
+| ACE GOLDFINGER              |
+| ADAPTATION HOLES            |
+| AFFAIR PREJUDICE            |
+| AFRICAN EGG                 |
+| AGENT TRUMAN                |
+| AIRPLANE SIERRA             |
+| AIRPORT POLLOCK             |
+| ALABAMA DEVIL               |
+| ALADDIN CALENDAR            |
+| ALAMO VIDEOTAPE             |
+| ALASKA PHANTOM              |
+| ALI FOREVER                 |
+| ALICE FANTASIA              |
+| ALIEN CENTER                |
+| ALLEY EVOLUTION             |
+| ALONE TRIP                  |
+| ALTER VICTORY               |
+| AMADEUS HOLY                |
+| AMELIE HELLFIGHTERS         |
+| AMERICAN CIRCUS             |
+| AMISTAD MIDSUMMER           |
+| ANACONDA CONFESSIONS        |
+| ANALYZE HOOSIERS            |
+| ANGELS LIFE                 |
+| ANNIE IDENTITY              |
+| ANONYMOUS HUMAN             |
+| ANTHEM LUKE                 |
+| ANTITRUST TOMATOES          |
+| ANYTHING SAVANNAH           |
+| APACHE DIVINE               |
+| APOCALYPSE FLAMINGOS        |
+| APOLLO TEEN                 |
+| ARABIA DOGMA                |
+| ARACHNOPHOBIA ROLLERCOASTER |
+| ARGONAUTS TOWN              |
+| ARIZONA BANG                |
+| ARK RIDGEMONT               |
+| ARMAGEDDON LOST             |
+| ARMY FLINTSTONES            |
+| ARSENIC INDEPENDENCE        |
+| ARTIST COLDBLOODED          |
+| ATLANTIS CAUSE              |
+| ATTACKS HATE                |
+| ATTRACTION NEWTON           |
+| AUTUMN CROW                 |
+| BABY HALL                   |
+| BACKLASH UNDEFEATED         |
+| BADMAN DAWN                 |
+| BAKED CLEOPATRA             |
+| BALLOON HOMEWARD            |
+| BALLROOM MOCKINGBIRD        |
+| BANG KWAI                   |
+| BANGER PINOCCHIO            |
+| BARBARELLA STREETCAR        |
+| BAREFOOT MANCHURIAN         |
+| BASIC EASY                  |
+| BEACH HEARTBREAKERS         |
+| BEAR GRACELAND              |
+| BEAST HUNCHBACK             |
+| BEAUTY GREASE               |
+| BED HIGHBALL                |
+| BEDAZZLED MARRIED           |
+| BEETHOVEN EXORCIST          |
+| BEHAVIOR RUNAWAY            |
+| BENEATH RUSH                |
+| BERETS AGENT                |
+| BETRAYED REAR               |
+| BEVERLY OUTLAW              |
+| BIKINI BORROWERS            |
+| BILKO ANONYMOUS             |
+| BILL OTHERS                 |
+| BINGO TALENTED              |
+| BIRCH ANTITRUST             |
+| BIRD INDEPENDENCE           |
+| BIRDCAGE CASPER             |
+| BIRDS PERDITION             |
+| BLACKOUT PRIVATE            |
+| BLADE POLISH                |
+| BLANKET BEVERLY             |
+| BLINDNESS GUN               |
+| BLOOD ARGONAUTS             |
+| BLUES INSTINCT              |
+| BOILED DARES                |
+| BONNIE HOLOCAUST            |
+| BOOGIE AMELIE               |
+| BOONDOCK BALLROOM           |
+| BORN SPINAL                 |
+| BORROWERS BEDAZZLED         |
+| BOULEVARD MOB               |
+| BOUND CHEAPER               |
+| BOWFINGER GABLES            |
+| BRANNIGAN SUNRISE           |
+| BRAVEHEART HUMAN            |
+| BREAKFAST GOLDFINGER        |
+| BREAKING HOME               |
+| BRIDE INTRIGUE              |
+| BRIGHT ENCOUNTERS           |
+| BRINGING HYSTERICAL         |
+| BROOKLYN DESERT             |
++-----------------------------+
 
 ```
 ---
